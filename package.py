@@ -1,28 +1,47 @@
-"""
-1. a program that prompts the user for the max number of items to be shipped 
-2. allow user enter the weight of each item, one by one 
-3. if over 20 kg on the current package then send and start the new package 
-4. item = 0  then terminate the program 
-5. display the infromation: 
-    - Number of packages sent
-    - Total weight of packages sent
-    - Total 'unused' capacity (non-optimal packaging). This is calculated as the number of packages sent multiplied by 20 kg, minus the total weight of packages sent.
-    - The package number that had the most 'unused' capacity and the amount of 'unused' capacity in that package.
-"""
+MAXIMUM_PACKAGE_WEIGHT = 20 
+MINIMUM_PACKAGE_WEIGHT = 1
+MAXIMUM_PACKAGE_WEIGHT = 10 
 
+items_to_be_shipped = int(input("Please enter the number of the items: "))
 
-MAX_PACKAGE_WEIGHT = 20
-MIN_PACKAGE_WEIGHT = 1
-ITEM_WEIGHT_MAX = 10 
-
-items_to_be_shipped = input ("Enter the number that need to be ship")
-
-number_packages_sent = 0 
-total_weight_package = 0 
-index_most_empty_package = 0
+package_weight = 0 
 weight_sent = 0 
-
+number_of_package_sent = 0 
+index_must_empty_package = 0
+lightest_package = 20 
 correct_items = 0 
 
-while correct_items < items_to_be_shipped: 
-    print("")
+while correct_items < items_to_be_shipped:
+    item_weight = int(input("Please enter the item weight: "))
+    if item_weight == 0: 
+        print("Unable to proceed")
+        break
+    elif item_weight < 1 or item_weight > 10:
+        print("You must enetred the weights betweeen 1 to 10") 
+        continue 
+    else:
+        correct_items += 1
+        package_weight += item_weight
+        if package_weight > 20:
+            package_weight -= item_weight 
+            number_of_package_sent +=1
+            weight_sent += package_weight
+            if package_weight < lightest_package:
+                lightest_package = package_weight
+                index_most_empty_package = number_of_package_sent
+            package_weight = item_weight
+else: 
+    if package_weight > 0: 
+        number_of_package_sent += 1
+        weight_sent += package_weight
+        print(package_weight)
+        if package_weight < lightest_package: 
+            lightest_package = package_weight
+            index_most_empty_package = number_of_package_sent
+
+unused_capacity = number_of_package_sent * 20 - weight_sent
+
+print(f"Number of package sent: {number_of_package_sent}")
+print(f"Total weight of package sent: {weight_sent}")
+print(f"Total Unused capacity: {unused_capacity}")
+print(f"Package number with the most unused kilograms: {index_most_empty_package}")
