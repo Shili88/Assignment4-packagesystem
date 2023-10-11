@@ -7,14 +7,14 @@ items_to_be_shipped = int(input("Please enter the number of the items: "))
 package_weight = 0 
 weight_sent = 0 
 number_of_package_sent = 0 
-index_must_empty_package = 0
+index_most_empty_package = 0
 lightest_package = 20 
 correct_items = 0 
 
 while correct_items < items_to_be_shipped:
     item_weight = int(input("Please enter the item weight: "))
     if item_weight == 0: 
-        print("Unable to proceed")
+        print("Finished the packaging")
         break
     elif item_weight < 1 or item_weight > 10:
         print("You must enetred the weights betweeen 1 to 10") 
